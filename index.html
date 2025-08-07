@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest - Stay Focused, Be Present</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Importación de Fuentes */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        /* ------------------- */
+        /* Variables y Estilos Globales */
+        /* ------------------- */
+        :root {
+            /* Paleta de Colores (Tema Claro) */
+            --bg-primary: #F8F9FA;
+            --bg-secondary: #FFFFFF;
+            --bg-accent: #E8F5E9;
+            --bg-footer: #212529;
+            --color-primary: #388E3C;
+            --color-secondary: #1B5E20;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --text-on-dark: #F8F9FA;
+            --shadow: 0px 8px 24px rgba(27, 94, 32, 0.08);
+            --shadow-hover: 0px 12px 32px rgba(27, 94, 32, 0.12);
+            --border-color: #DEE2E6;
+            
+            /* Tipografía y Espaciado */
+            --font-family: 'Poppins', sans-serif;
+            --radius: 16px;
+            --transition: all 0.3s ease-in-out;
+            
+            /* Tipografía Fluida con clamp(min, preferred, max) */
+            --fs-h1: clamp(2.5rem, 5vw + 1rem, 4rem);
+            --fs-h2: clamp(2rem, 4vw + 1rem, 3rem);
+            --fs-h3: clamp(1.25rem, 2vw + 0.5rem, 1.5rem);
+        }
+
+        /* Paleta de Colores (Tema Oscuro) */
+        [data-theme='dark'] {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --bg-accent: #2c3e50;
+            --bg-footer: #1E1E1E;
+            --color-primary: #66BB6A;
+            --color-secondary: #A5D6A7;
+            --text-primary: #E0E0E0;
+            --text-secondary: #B0B0B0;
+            --text-on-dark: #F8F9FA;
+            --shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+            --shadow-hover: 0px 12px 32px rgba(0, 0, 0, 0.3);
+            --border-color: #333333;
+        }
+
+        /* Reset y Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.7;
+        }
+        
+        main {
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ------------------- */
+        /* Header y Navegación */
+        /* ------------------- */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition);
+            background-color: transparent;
+        }
+
+        .header.scrolled {
+            background-color: var(--bg-secondary);
+            box-shadow: var(--shadow);
+            padding: 0.75rem 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+        
+        /* Interruptor de Tema (Modo Oscuro/Claro) */
+        .theme-switcher {
+            background-color: var(--border-color);
+            border-radius: 50px;
+            padding: 0.25rem;
+            cursor: pointer;
+            display: flex;
+        }
+        .theme-switcher .icon {
+            font-size: 0.8rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .theme-switcher .icon.active {
+            background-color: var(--bg-secondary);
+            color: var(--color-primary);
+            box-shadow: var(--shadow);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        /* ------------------- */
+        /* Hero Section */
+        /* ------------------- */
+        .hero {
+            background-color: var(--bg-accent);
+            padding: 180px 0 120px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: var(--fs-h1);
+            font-weight: 800;
+            color: var(--color-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            text-decoration: none;
+            color: #fff;
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: var(--shadow-hover);
+        }
+        .cta-button.app-store { background-color: #007aff; }
+        .cta-button.google-play { background-color: var(--color-primary); }
+
+        /* ------------------- */
+        /* Secciones Generales */
+        /* ------------------- */
+        .section {
+            padding: 100px 0;
+            text-align: center;
+        }
+        .section:nth-child(even) {
+            background-color: var(--bg-secondary);
+        }
+
+        .section-heading {
+            font-size: var(--fs-h2);
+            color: var(--color-secondary);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ------------------- */
+        /* Features (Características) */
+        /* ------------------- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-secondary);
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+        #features .feature-card { background-color: var(--bg-primary); } /* Ajuste para sección par */
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: var(--fs-h3);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* ------------------- */
+        /* Impact Section */
+        /* ------------------- */
+        #impact {
+            background-color: var(--color-secondary);
+            color: var(--text-on-dark);
+        }
+        #impact .section-heading, #impact .section-subtitle, #impact p {
+            color: var(--text-on-dark);
+        }
+        .impact-counter {
+            font-size: var(--fs-h1);
+            font-weight: 800;
+        }
+        
+        /* ------------------- */
+        /* Testimonials Section */
+        /* ------------------- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        .testimonial-card {
+            background-color: var(--bg-primary); /* Ajuste para sección par */
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--color-primary);
+        }
+        .testimonial-card p {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .testimonial-card .author {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* ------------------- */
+        /* FAQ Section */
+        /* ------------------- */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .faq-item {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .faq-question .icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease;
+        }
+        .faq-answer p {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-secondary);
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Suficiente para la mayoría de respuestas */
+        }
+        .faq-item.active .faq-question .icon {
+            transform: rotate(45deg);
+        }
+
+        /* ------------------- */
+        /* Footer */
+        /* ------------------- */
+        footer {
+            background-color: var(--bg-footer);
+            color: var(--text-on-dark);
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+        .social-links {
+            margin-bottom: 1.5rem;
+        }
+        .social-links a {
+            color: var(--text-on-dark);
+            font-size: 1.5rem;
+            margin: 0 0.75rem;
+            transition: var(--transition);
+        }
+        .social-links a:hover {
+            color: var(--color-primary);
+            transform: translateY(-5px);
+        }
+        .copyright {
+            color: var(--text-secondary);
+        }
+        
+        /* ------------------- */
+        /* Responsividad */
+        /* ------------------- */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            .nav-menu.active .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: var(--bg-primary);
+                justify-content: center;
+                align-items: center;
+                font-size: 1.5rem;
+                z-index: 10;
+            }
+            .hamburger {
+                display: block;
+                z-index: 20;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header" id="header">
+        <div class="container navbar">
+            <a href="#" class="logo">Forest</a>
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-links">
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#testimonials">Testimonios</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+                <div class="theme-switcher" id="theme-switcher">
+                    <div class="icon" data-theme-value="light"><i class="fas fa-sun"></i></div>
+                    <div class="icon" data-theme-value="dark"><i class="fas fa-moon"></i></div>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Stay focused, be present.</h1>
+                <p>La gamificación se une a la productividad. Planta árboles virtuales, mantente alejado de tu teléfono y ayuda a plantar árboles reales en el proceso.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="cta-button app-store"><i class="fab fa-apple"></i> App Store</a>
+                    <a href="#" class="cta-button google-play"><i class="fab fa-google-play"></i> Google Play</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section">
+            <div class="container">
+                <h2 class="section-heading">Gamifica tu Productividad</h2>
+                <p class="section-subtitle">Un sistema simple y efectivo para ayudarte a construir hábitos de concentración y vencer la procrastinación.</p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon"><i class="fas fa-tree"></i></div>
+                        <h3>Planta y Crece</h3>
+                        <p>Inicia un temporizador y un árbol virtual comienza a crecer. Cada minuto de enfoque lo hace más fuerte.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"><i class="fas fa-shield-halved"></i></div>
+                        <h3>Evita Distracciones</h3>
+                        <p>Si sales de la app, tu árbol se marchita. Un poderoso incentivo para mantenerte en tu tarea.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon"><i class="fas fa-award"></i></div>
+                        <h3>Gana Recompensas</h3>
+                        <p>Completa sesiones para ganar monedas, desbloquear nuevas especies de árboles y expandir tu bosque digital.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="impact" class="section">
+            <div class="container">
+                <h2 class="section-heading">Tu Enfoque Tiene un Impacto Real</h2>
+                <p class="section-subtitle">Nos asociamos con "Trees for the Future" para convertir tu éxito digital en reforestación global.</p>
+                <div>
+                    <div id="trees-planted-counter" class="impact-counter" data-target="5432109">0</div>
+                    <p>Árboles plantados gracias a la concentración de nuestros usuarios.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="section">
+            <div class="container">
+                <h2 class="section-heading">Amado por Millones</h2>
+                <p class="section-subtitle">Estudiantes, desarrolladores, artistas y profesionales de todo el mundo usan Forest para mejorar su concentración.</p>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <p>"Finalmente algo que funciona. La idea de que mi pequeño árbol muera si me distraigo es sorprendentemente efectiva. Mi productividad se ha disparado."</p>
+                        <span class="author">- Ana, Estudiante Universitaria</span>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Como desarrollador freelance, el 'deep work' es esencial. Forest me ayuda a crear bloques de tiempo ininterrumpido. La app es simple, hermosa y brillante."</p>
+                        <span class="author">- Carlos, Desarrollador Backend</span>
+                    </div>
+                     <div class="testimonial-card">
+                        <p>"No es solo una app, es un cambio de mentalidad. Me ha enseñado a valorar mi tiempo y atención. Y saber que ayudo a plantar árboles reales es la mejor parte."</p>
+                        <span class="author">- Sofía, Diseñadora UX</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="section">
+            <div class="container">
+                <h2 class="section-heading">Preguntas Frecuentes</h2>
+                <p class="section-subtitle">Aquí respondemos algunas de las dudas más comunes sobre Forest.</p>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Qué pasa si recibo una llamada importante?</span>
+                            <i class="fas fa-plus icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>¡No te preocupes! Forest tiene una función de "lista blanca" donde puedes permitir que ciertas aplicaciones (como el teléfono o apps de mensajería específicas) no marchiten tu árbol. La concentración es importante, pero la vida también lo es.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿La plantación de árboles reales tiene un costo extra?</span>
+                            <i class="fas fa-plus icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No. Al usar la versión Pro de la aplicación y gastar las monedas virtuales que ganas al concentrarte, puedes elegir plantar un árbol real a través de nuestro socio "Trees for the Future". El costo está cubierto por nosotros como parte de nuestra misión.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Puedo usar Forest con mis amigos?</span>
+                            <i class="fas fa-plus icon"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>¡Sí! Puedes iniciar sesiones de plantación en grupo. Si una persona del grupo se rinde y sale de la app, el árbol de todos se marchita. Es una forma divertida de mantenerse responsables y productivos juntos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="copyright">&copy; 2025 Forest App. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // ===================================
+        // MÓDULO: NAVEGACIÓN Y HEADER
+        // ===================================
+        const header = document.getElementById('header');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Efecto de scroll en el header
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Menú hamburguesa para móviles
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                    hamburger.querySelector('i').classList.add('fa-bars');
+                    hamburger.querySelector('i').classList.remove('fa-times');
+                }
+            });
+        });
+
+        // ===================================
+        // MÓDULO: INTERRUPTOR DE TEMA (DARK MODE)
+        // ===================================
+        const themeSwitcher = document.getElementById('theme-switcher');
+        const docHtml = document.documentElement;
+        
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        docHtml.setAttribute('data-theme', savedTheme);
+        document.querySelector(`.theme-switcher .icon[data-theme-value="${savedTheme}"]`).classList.add('active');
+
+        themeSwitcher.addEventListener('click', (e) => {
+            const selectedIcon = e.target.closest('.icon');
+            if (!selectedIcon) return;
+            
+            const theme = selectedIcon.dataset.themeValue;
+            docHtml.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            // Actualizar clase activa
+            themeSwitcher.querySelector('.icon.active').classList.remove('active');
+            selectedIcon.classList.add('active');
+        });
+
+        // ===================================
+        // MÓDULO: CONTADOR ANIMADO
+        // ===================================
+        const counterElement = document.getElementById('trees-planted-counter');
+
+        const animateCounter = (element) => {
+            const target = +element.getAttribute('data-target');
+            let current = 0;
+            const duration = 2000; // 2 segundos
+            let startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                current = Math.floor(progress * target);
+                element.innerText = current.toLocaleString('es');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            }
+            window.requestAnimationFrame(step);
+        };
+
+        // ===================================
+        // MÓDULO: ACORDEÓN DE PREGUNTAS FRECUENTES (FAQ)
+        // ===================================
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                // Opcional: Cerrar otros items al abrir uno nuevo
+                // faqItems.forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        });
+
+        // ===================================
+        // MÓDULO: OBSERVADOR DE INTERSECCIÓN (Para animaciones al hacer scroll)
+        // ===================================
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animar contador si es el elemento observado
+                    if (entry.target.id === 'trees-planted-counter') {
+                        animateCounter(entry.target);
+                    }
+                    // Aquí se podrían agregar otras animaciones de scroll
+                    
+                    observer.unobserve(entry.target); // Dejar de observar una vez animado
+                }
+            });
+        }, { threshold: 0.5 }); // Se activa cuando el 50% del elemento es visible
+
+        if(counterElement) {
+            observer.observe(counterElement);
+        }
+    });
+    </script>
+</body>
+</html>
